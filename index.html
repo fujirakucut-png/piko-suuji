@@ -8,36 +8,33 @@
 </head>
 <body>
 <main class="app">
-
   <section id="titleScreen" class="screen active">
     <div class="egg">🥚</div>
     <h1>PIKO-SUUJI</h1>
     <p class="subtitle">きょうりゅうたんけん</p>
-
     <div class="doctor-card">
-      <img src="images/Dr.uroko.png" alt="Dr.うろこ" class="doctor-img" />
-      <div class="speech"><p id="titleDoctorText">やあ！ぼくは Dr.うろこ！</p></div>
+      <img src="images/Dr.uroko.png" alt="うろこ" class="doctor-img" />
+      <div class="speech"><p id="titleDoctorText">やあ！ぼくは うろこ！</p></div>
     </div>
-
     <div class="buttons">
-      <button class="icon-btn blue wide" onclick="speakIntro()">🤠<span>はかせ</span></button>
-      <button class="icon-btn yellow wide" onclick="goNext()">🦖<span>はじめる</span></button>
+      <button class="gummy-btn blue wide" onclick="speakIntro()">⚔️<span>うろこ</span></button>
+      <button class="gummy-btn yellow wide" onclick="goNext()">🦖<span>はじめる</span></button>
     </div>
-    <p class="note">Ver.0.7.1 修正版</p>
+    <p class="note">Ver.0.8 肉画像・グミボタン</p>
   </section>
 
   <section id="nameScreen" class="screen">
     <h2>おなまえを<br>おしえてね</h2>
     <div class="name-card">
-      <div class="mini-doctor"><img src="images/Dr.uroko.png" alt="Dr.うろこ" /></div>
-      <div class="speech"><p>ぼくは Dr.うろこ！<br>きみの名前を教えてね。</p></div>
+      <div class="mini-doctor"><img src="images/Dr.uroko.png" alt="うろこ" /></div>
+      <div class="speech"><p>ぼくは うろこ！<br>きみの名前を教えてね。</p></div>
       <input id="nameInput" class="name-input" type="text" value="しゅり" maxlength="8" />
       <div class="suffix-row">
         <button id="kunBtn" class="suffix-btn selected" onclick="selectSuffix('くん')">くん</button>
         <button id="chanBtn" class="suffix-btn" onclick="selectSuffix('ちゃん')">ちゃん</button>
         <button id="sanBtn" class="suffix-btn" onclick="selectSuffix('さん')">さん</button>
       </div>
-      <button class="icon-btn yellow wide" onclick="savePlayerName()">✅<span>これでOK</span></button>
+      <button class="gummy-btn yellow wide" onclick="savePlayerName()">✅<span>これでOK</span></button>
     </div>
   </section>
 
@@ -45,16 +42,14 @@
     <div class="egg">🥚</div>
     <h1>PIKO-SUUJI</h1>
     <p class="subtitle">きょうりゅうたんけん</p>
-
     <div class="doctor-card home-doctor-card">
-      <img src="images/Dr.uroko.png" alt="Dr.うろこ" class="doctor-img home-doctor-img" />
+      <img src="images/Dr.uroko.png" alt="うろこ" class="doctor-img home-doctor-img" />
       <div class="speech"><p id="homeDoctorText">おかえり！</p></div>
     </div>
-
     <div class="home-grid">
       <button class="home-btn yellow" onclick="openMission()">①②③<span>すうじ</span></button>
-      <button class="home-btn red" onclick="quickFeed()">🍖<span>ごはん</span></button>
-      <button class="home-btn green" onclick="speakWelcome()">🤠<span>はかせ</span></button>
+      <button class="home-btn red" onclick="quickFeed()"><img src="images/meat.png" class="home-meat-icon" alt="おにく"><span>ごはん</span></button>
+      <button class="home-btn green" onclick="speakWelcome()">⚔️<span>うろこ</span></button>
       <button class="home-btn white" onclick="resetName()">⚙️<span>せってい</span></button>
     </div>
   </section>
@@ -67,9 +62,9 @@
       <p class="mission-text">すうじを<br><strong>5こ</strong><br>みつけよう！</p>
       <div class="speech"><p id="missionText">クリアすると、たまごが光るぞ！</p></div>
       <div class="buttons">
-        <button class="icon-btn blue wide" onclick="speakMission()">🔊<span>きく</span></button>
-        <button class="icon-btn yellow wide" onclick="startNumberGame()">▶️<span>スタート</span></button>
-        <button class="icon-btn white wide" onclick="openHome()">🏠<span>おうち</span></button>
+        <button class="gummy-btn blue wide" onclick="speakMission()">🔊<span>きく</span></button>
+        <button class="gummy-btn yellow wide" onclick="startNumberGame()">▶️<span>スタート</span></button>
+        <button class="gummy-btn white wide" onclick="openHome()">🏠<span>おうち</span></button>
       </div>
     </div>
   </section>
@@ -91,13 +86,13 @@
     <div class="egg glowing">🥚</div>
     <h2>できた！</h2>
     <div class="doctor-card">
-      <img src="images/Dr.uroko.png" alt="Dr.うろこ" class="doctor-img small-doctor" />
+      <img src="images/Dr.uroko.png" alt="うろこ" class="doctor-img small-doctor" />
       <div class="speech"><p id="clearText">すごい！たまごが光ったぞ！</p></div>
     </div>
     <div class="buttons">
-      <button class="icon-btn blue wide" onclick="speakClear()">🤠<span>はかせ</span></button>
-      <button class="icon-btn yellow wide" onclick="openHatch()">🥚<span>たまご</span></button>
-      <button class="icon-btn white wide" onclick="openHome()">🏠<span>おうち</span></button>
+      <button class="gummy-btn blue wide" onclick="speakClear()">⚔️<span>うろこ</span></button>
+      <button class="gummy-btn yellow wide" onclick="openHatch()">🥚<span>たまご</span></button>
+      <button class="gummy-btn white wide" onclick="openHome()">🏠<span>おうち</span></button>
     </div>
   </section>
 
@@ -111,8 +106,8 @@
     </div>
     <div class="speech hatch-speech"><p id="hatchText">なにが生まれるかな？</p></div>
     <div class="buttons">
-      <button id="afterHatchBtn" class="icon-btn red wide hidden" onclick="openFeed()">🍖<span>ごはんをあげる</span></button>
-      <button class="icon-btn white wide" onclick="openHome()">🏠<span>おうち</span></button>
+      <button id="afterHatchBtn" class="gummy-btn red wide hidden" onclick="openFeed()"><img src="images/meat.png" class="button-meat-img" alt="おにく"><span>ごはんをあげる</span></button>
+      <button class="gummy-btn white wide" onclick="openHome()">🏠<span>おうち</span></button>
     </div>
   </section>
 
@@ -124,14 +119,15 @@
       <p id="feedText">ちびティラノは<br>おなかがすいているみたい！</p>
     </div>
     <div class="food-grid">
-      <button class="food-btn meat" onclick="feedDinoFood('meat', this)">🍖<br><span>おにく</span></button>
+      <button class="food-btn meat" onclick="feedDinoFood('meat', this)"><img src="images/meat.png" class="meat-img" alt="おにく"><span>おにく</span></button>
       <button class="food-btn leaf" onclick="feedDinoFood('leaf', this)">🥬<br><span>はっぱ</span></button>
       <button class="food-btn fish" onclick="feedDinoFood('fish', this)">🐟<br><span>さかな</span></button>
     </div>
-    <div class="speech"><p id="feedDoctorText">ティラノは何が好きかな？</p></div>
+    <div id="meatFlyLayer" class="meat-fly-layer"></div>
+    <div class="speech"><p id="feedDoctorText">なにをあげてみる？</p></div>
     <div class="buttons">
-      <button id="finishFeedBtn" class="icon-btn yellow wide hidden" onclick="openDinoGet()">🦖<span>はっけん！</span></button>
-      <button class="icon-btn white wide" onclick="openHome()">🏠<span>おうち</span></button>
+      <button id="finishFeedBtn" class="gummy-btn yellow wide hidden" onclick="openDinoGet()">🦖<span>はっけん！</span></button>
+      <button class="gummy-btn white wide" onclick="openHome()">🏠<span>おうち</span></button>
     </div>
   </section>
 
@@ -145,9 +141,9 @@
     </div>
     <div class="speech"><p id="dinoGetText">やったー！新しい恐竜が生まれたぞ！</p></div>
     <div class="buttons">
-      <button class="icon-btn blue wide" onclick="speakDinoGet()">🤠<span>はかせ</span></button>
-      <button class="icon-btn yellow wide" onclick="openMission()">①②③<span>もういちど</span></button>
-      <button class="icon-btn white wide" onclick="openHome()">🏠<span>おうち</span></button>
+      <button class="gummy-btn blue wide" onclick="speakDinoGet()">⚔️<span>うろこ</span></button>
+      <button class="gummy-btn yellow wide" onclick="openMission()">①②③<span>もういちど</span></button>
+      <button class="gummy-btn white wide" onclick="openHome()">🏠<span>おうち</span></button>
     </div>
   </section>
 
@@ -155,7 +151,6 @@
     <div id="feedbackMark">〇</div>
     <p id="feedbackText">せいかい！</p>
   </div>
-
 </main>
 <script src="script.js"></script>
 </body>
