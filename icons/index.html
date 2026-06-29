@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>PIKO-SUUJI</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <section id="titleScreen" class="screen active">
+      <div class="egg">🥚</div><h1>PIKO-SUUJI</h1><p class="subtitle">きょうりゅうたんけん</p>
+      <div class="doctor-card"><img src="images/Dr.uroko.png" alt="Dr.うろこ" class="doctor-img" /><div class="speech"><p id="titleDoctorText">やあ！ぼくは Dr.うろこ！</p></div></div>
+      <div class="buttons"><button class="main-btn" onclick="speakIntro()">🔊 はかせの声をきく</button><button class="start-btn" onclick="goNext()">🦖 はじめる</button></div>
+      <p class="note">Ver.0.6 ごはんをあげる</p>
+    </section>
+    <section id="nameScreen" class="screen"><h2>おなまえを<br>おしえてね</h2><div class="name-card"><div class="mini-doctor"><img src="images/Dr.uroko.png" alt="Dr.うろこ" /></div><div class="speech"><p>ぼくは Dr.うろこ！<br>きみの名前を教えてね。</p></div><input id="nameInput" class="name-input" type="text" value="しゅり" maxlength="8" /><div class="suffix-row"><button id="kunBtn" class="suffix-btn selected" onclick="selectSuffix('くん')">くん</button><button id="chanBtn" class="suffix-btn" onclick="selectSuffix('ちゃん')">ちゃん</button><button id="sanBtn" class="suffix-btn" onclick="selectSuffix('さん')">さん</button></div><button class="start-btn" onclick="savePlayerName()">これでOK</button></div></section>
+    <section id="homeScreen" class="screen"><div class="egg">🥚</div><h1>PIKO-SUUJI</h1><p class="subtitle">きょうりゅうたんけん</p><div class="doctor-card"><img src="images/Dr.uroko.png" alt="Dr.うろこ" class="doctor-img" /><div class="speech"><p id="homeDoctorText">おかえり！</p></div></div><div class="buttons"><button class="main-btn" onclick="speakWelcome()">🔊 よびかけをきく</button><button class="start-btn" onclick="openMission()">🔢 すうじをさがす</button><button class="small-btn" onclick="resetName()">なまえをかえる</button></div></section>
+    <section id="missionScreen" class="screen"><div class="egg small-egg">🥚</div><h2>きょうの<br>ミッション</h2><div class="mission-card"><div class="mission-icon">👣</div><p class="mission-text">すうじを<br><strong>5こ</strong><br>みつけよう！</p><div class="speech"><p id="missionText">クリアすると、たまごが光るぞ！</p></div><div class="buttons"><button class="main-btn" onclick="speakMission()">🔊 ミッションをきく</button><button class="start-btn" onclick="startNumberGame()">スタート</button><button class="small-btn" onclick="openHome()">ホームにもどる</button></div></div></section>
+    <section id="gameScreen" class="screen game-screen"><div class="game-top"><div class="badge">もんだい <span id="questionNow">1</span>/5</div><button class="listen-btn" onclick="repeatQuestion(true)">🔊 もういちど</button><div class="badge">⭐ <span id="scoreNow">0</span></div></div><div class="target-card"><p>このすうじを<br>えらんでね</p><div id="targetNumber" class="target-number">3</div></div><div id="numberGrid" class="number-grid"></div></section>
+    <section id="clearScreen" class="screen"><div class="egg glowing">🥚</div><h2>できた！</h2><div class="doctor-card"><img src="images/Dr.uroko.png" alt="Dr.うろこ" class="doctor-img small-doctor" /><div class="speech"><p id="clearText">すごい！たまごが光ったぞ！</p></div></div><div class="buttons"><button class="main-btn" onclick="speakClear()">🔊 ほめてもらう</button><button class="start-btn" onclick="openHatch()">🥚 たまごをみる</button><button class="small-btn" onclick="openHome()">ホーム</button></div></section>
+    <section id="hatchScreen" class="screen hatch-screen"><h2 id="hatchTitle">たまごを<br>タッチしてね</h2><div class="hatch-area" onclick="hatchEgg()"><div id="hatchEgg" class="hatch-egg">🥚</div><div id="crackText" class="crack-text hidden">ピキ…</div><div id="sparkles" class="sparkles">✨ ✨ ✨</div><div id="babyDino" class="baby-dino hidden">🦖</div></div><div class="speech hatch-speech"><p id="hatchText">なにが生まれるかな？</p></div><div class="buttons"><button id="afterHatchBtn" class="start-btn hidden" onclick="openFeed()">ごはんをあげる</button><button class="small-btn" onclick="openHome()">ホーム</button></div></section>
+    <section id="feedScreen" class="screen"><h2>ごはんを<br>あげよう！</h2><div class="dino-card hungry-card"><div id="feedDino" class="dino-icon hungry">🦖</div><div class="heart-meter" id="heartMeter">🤍🤍🤍</div><p id="feedText">ちびティラノは<br>おなかがすいているみたい！</p></div><div class="food-grid"><button class="food-btn meat" onclick="feedDinoFood('meat', this)">🍖<br><span>おにく</span></button><button class="food-btn leaf" onclick="feedDinoFood('leaf', this)">🥬<br><span>はっぱ</span></button><button class="food-btn fish" onclick="feedDinoFood('fish', this)">🐟<br><span>おさかな</span></button></div><div class="speech"><p id="feedDoctorText">ティラノは何が好きかな？</p></div><div class="buttons"><button id="finishFeedBtn" class="start-btn hidden" onclick="openDinoGet()">はっけん！</button><button class="small-btn" onclick="openHome()">ホーム</button></div></section>
+    <section id="dinoGetScreen" class="screen"><div class="confetti">🎉 🦖 🎉</div><h2>はっけん！</h2><div class="dino-card"><div class="dino-icon">🦖</div><h3>ちびティラノ</h3><p>小さくても元気いっぱい！<br>お肉が好きな赤ちゃん恐竜だよ。</p></div><div class="speech"><p id="dinoGetText">やったー！新しい恐竜が生まれたぞ！</p></div><div class="buttons"><button class="main-btn" onclick="speakDinoGet()">🔊 はかせに聞く</button><button class="start-btn" onclick="openMission()">もういちど</button><button class="small-btn" onclick="openHome()">ホーム</button></div></section>
+    <div id="feedback" class="feedback"><div id="feedbackMark">〇</div><p id="feedbackText">せいかい！</p></div>
+  </main><script src="script.js"></script>
+</body>
+</html>
