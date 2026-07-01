@@ -83,3 +83,115 @@ h1{margin:0;font-size:38px;letter-spacing:1px;font-weight:900}h2{margin:0 0 14px
   border-radius:999px;
   background:#fff;
 }
+
+
+/* Ver.0.9.2 ティラノ画像 */
+.baby-dino-img{
+  position:absolute;
+  width:190px;
+  max-height:170px;
+  object-fit:contain;
+  z-index:3;
+  animation:babyPop .75s ease-out forwards;
+  filter:drop-shadow(0 10px 8px rgba(0,0,0,.28));
+}
+.feed-dino-img{
+  width:170px;
+  height:135px;
+  object-fit:contain;
+  display:block;
+  margin:0 auto;
+  filter:drop-shadow(0 8px 7px rgba(0,0,0,.25));
+}
+.get-dino-img{
+  width:220px;
+  height:160px;
+  object-fit:contain;
+  display:block;
+  margin:0 auto 6px;
+  filter:drop-shadow(0 8px 7px rgba(0,0,0,.25));
+}
+.zukan-dino-img{
+  width:96px;
+  height:72px;
+  object-fit:contain;
+  filter:drop-shadow(0 5px 4px rgba(0,0,0,.25));
+}
+.baby-base-dino-img{
+  position:absolute;
+  right:52px;
+  bottom:16px;
+  width:98px;
+  height:72px;
+  object-fit:contain;
+  animation:dinoWiggle 1.4s ease-in-out infinite;
+  filter:drop-shadow(0 6px 5px rgba(0,0,0,.25));
+}
+
+
+/* Ver.0.9.4 恐竜組み込み */
+.zukan-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+.zukan-dino-img{
+  width:104px;
+  height:76px;
+  object-fit:contain;
+  filter:drop-shadow(0 5px 4px rgba(0,0,0,.25));
+}
+.zukan-item.locked .zukan-dino-img{
+  filter:grayscale(1) brightness(.45);
+  opacity:.55;
+}
+.base-dino-list{
+  position:absolute;
+  left:8px;
+  right:8px;
+  bottom:12px;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:flex-end;
+  gap:3px;
+  z-index:4;
+}
+.base-dino-mini{
+  width:64px;
+  height:48px;
+  object-fit:contain;
+  filter:drop-shadow(0 5px 4px rgba(0,0,0,.28));
+  animation:dinoWiggle 1.6s ease-in-out infinite;
+}
+.base-dino-mini:nth-child(2n){
+  animation-delay:.25s;
+}
+.base-dino-mini:nth-child(3n){
+  animation-delay:.5s;
+}
+.baby-dino-img{
+  position:absolute;
+  width:210px;
+  max-height:180px;
+  object-fit:contain;
+  z-index:3;
+  animation:babyPop .75s ease-out forwards;
+  filter:drop-shadow(0 10px 8px rgba(0,0,0,.28));
+}
+.feed-dino-img{
+  width:180px;
+  height:136px;
+  object-fit:contain;
+  display:block;
+  margin:0 auto;
+  filter:drop-shadow(0 8px 7px rgba(0,0,0,.25));
+}
+.get-dino-img{
+  width:230px;
+  height:165px;
+  object-fit:contain;
+  display:block;
+  margin:0 auto 6px;
+  filter:drop-shadow(0 8px 7px rgba(0,0,0,.25));
+}

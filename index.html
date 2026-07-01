@@ -21,7 +21,7 @@
     <button class="gummy-btn blue wide" onclick="speakIntro()">⚔️<span>うろこ</span></button>
     <button class="gummy-btn yellow wide" onclick="goNext()">🦖<span>はじめる</span></button>
   </div>
-  <p class="note">Ver.0.9 基地おためし版</p>
+  <p class="note">Ver.0.9.4 恐竜組み込み版</p>
 </section>
 
 <section id="nameScreen" class="screen">
@@ -66,7 +66,7 @@
       <div class="tent">⛺</div>
       <div class="tree tree1">🌳</div>
       <div class="tree tree2">🌴</div>
-      <div class="baby-base-dino">🦖</div>
+      <div id="baseDinoList" class="base-dino-list"></div>
       <div class="campfire">🔥</div>
     </div>
     <div class="base-level">きち Lv.<span id="baseLevel">1</span></div>
@@ -91,67 +91,7 @@
       はっけん <span id="zukanFound">1</span> / <span id="zukanTotal">10</span>
     </div>
 
-    <div class="zukan-grid">
-      <button class="zukan-item found" onclick="showDinoInfo('ティラノサウルス')">
-        <div class="zukan-dino">🦖</div>
-        <div class="zukan-name">ティラノ</div>
-        <div class="zukan-badge">GET!</div>
-      </button>
-
-      <button class="zukan-item locked" onclick="showDinoHint('トリケラトプス')">
-        <div class="zukan-dino">❔</div>
-        <div class="zukan-name">？？？</div>
-        <div class="zukan-badge">まだ</div>
-      </button>
-
-      <button class="zukan-item locked" onclick="showDinoHint('スピノサウルス')">
-        <div class="zukan-dino">❔</div>
-        <div class="zukan-name">？？？</div>
-        <div class="zukan-badge">まだ</div>
-      </button>
-
-      <button class="zukan-item locked" onclick="showDinoHint('アンキロサウルス')">
-        <div class="zukan-dino">❔</div>
-        <div class="zukan-name">？？？</div>
-        <div class="zukan-badge">まだ</div>
-      </button>
-
-      <button class="zukan-item locked" onclick="showDinoHint('ブラキオサウルス')">
-        <div class="zukan-dino">❔</div>
-        <div class="zukan-name">？？？</div>
-        <div class="zukan-badge">まだ</div>
-      </button>
-
-      <button class="zukan-item locked" onclick="showDinoHint('ステゴサウルス')">
-        <div class="zukan-dino">❔</div>
-        <div class="zukan-name">？？？</div>
-        <div class="zukan-badge">まだ</div>
-      </button>
-
-      <button class="zukan-item locked" onclick="showDinoHint('パラサウロロフス')">
-        <div class="zukan-dino">❔</div>
-        <div class="zukan-name">？？？</div>
-        <div class="zukan-badge">まだ</div>
-      </button>
-
-      <button class="zukan-item locked" onclick="showDinoHint('アロサウルス')">
-        <div class="zukan-dino">❔</div>
-        <div class="zukan-name">？？？</div>
-        <div class="zukan-badge">まだ</div>
-      </button>
-
-      <button class="zukan-item locked" onclick="showDinoHint('カルノタウルス')">
-        <div class="zukan-dino">❔</div>
-        <div class="zukan-name">？？？</div>
-        <div class="zukan-badge">まだ</div>
-      </button>
-
-      <button class="zukan-item locked" onclick="showDinoHint('プテラノドン')">
-        <div class="zukan-dino">❔</div>
-        <div class="zukan-name">？？？</div>
-        <div class="zukan-badge">まだ</div>
-      </button>
-    </div>
+    <div class="zukan-grid" id="zukanGrid"></div>
   </div>
 
   <div class="speech"><p id="zukanText">隊長！ここに発見した恐竜が集まるぞ。</p></div>
@@ -211,7 +151,7 @@
     <div id="hatchEgg" class="hatch-egg">🥚</div>
     <div id="crackText" class="crack-text hidden">ピキ…</div>
     <div id="sparkles" class="sparkles">✨ ✨ ✨</div>
-    <div id="babyDino" class="baby-dino hidden">🦖</div>
+    <img id="babyDino" class="baby-dino-img hidden" src="images/dinosaurs/tyrannosaurus.png" alt="ティラノサウルス" />
   </div>
   <div class="speech hatch-speech"><p id="hatchText">なにが生まれるかな？</p></div>
   <div class="buttons">
@@ -223,7 +163,7 @@
 <section id="feedScreen" class="screen">
   <h2>ごはんを<br>あげよう！</h2>
   <div class="dino-card hungry-card">
-    <div id="feedDino" class="dino-icon hungry">🦖</div>
+    <img id="feedDino" class="feed-dino-img hungry" src="images/dinosaurs/tyrannosaurus.png" alt="ティラノサウルス" />
     <div class="heart-meter" id="heartMeter">🤍🤍🤍🤍🤍</div>
     <p id="feedText">ちびティラノは<br>おなかがすいているみたい！</p>
   </div>
@@ -244,8 +184,8 @@
   <div class="confetti">🎉 🦖 🎉</div>
   <h2>はっけん！</h2>
   <div class="dino-card">
-    <div class="dino-icon">🦖</div>
-    <h3>ちびティラノ</h3>
+    <img id="getDinoImg" class="get-dino-img" src="images/dinosaurs/tyrannosaurus.png" alt="ティラノサウルス" />
+    <h3 id="getDinoName">ティラノサウルス</h3>
     <p>小さくても元気いっぱい！<br>お肉が好きな赤ちゃん恐竜だよ。</p>
   </div>
   <div class="speech"><p id="dinoGetText">やったー！新しい恐竜が生まれたぞ！</p></div>

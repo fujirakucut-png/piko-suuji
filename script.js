@@ -27,7 +27,7 @@ function finishGame(){el("clearText").textContent="すごい！"+getPlayerCall()
 function speakClear(){sound("tap");speak("隊長、よく最後までがんばったね。うろこはうれしいぞ。")}
 function openHatch(){sound("tap");hatched=false;el("hatchTitle").innerHTML="たまごを<br>タッチしてね";el("hatchText").textContent="なにが生まれるかな？";el("crackText").classList.add("hidden");el("crackText").textContent="ピキ…";el("hatchEgg").className="hatch-egg";el("hatchEgg").textContent="🥚";document.querySelector(".hatch-area").classList.remove("cracking");el("babyDino").classList.add("hidden");el("afterHatchBtn").classList.add("hidden");showScreen("hatchScreen");speak(getPlayerCall()+"。たまごをタッチしてね。")}
 function hatchEgg(){if(hatched)return;hatched=true;el("hatchTitle").innerHTML="うまれるよ！";el("hatchText").textContent="ピキ…ピキピキ…！";el("crackText").classList.remove("hidden");speak("おっ。たまごが、われそうだぞ。");playCrackSoundLong();document.querySelector(".hatch-area").classList.add("cracking");el("hatchEgg").classList.add("crack");setTimeout(()=>el("crackText").textContent="ピキ…",150);setTimeout(()=>el("crackText").textContent="ピキッ…",700);setTimeout(()=>el("crackText").textContent="ピキピキ…",1300);setTimeout(()=>el("crackText").textContent="ピキピキピキ…！",1900);setTimeout(()=>el("crackText").textContent="パカーン！",2550);setTimeout(()=>{el("babyDino").classList.remove("hidden");el("hatchText").textContent="赤ちゃん恐竜が 生まれたよ！";el("afterHatchBtn").classList.remove("hidden");speak("やったー。赤ちゃん恐竜が生まれたよ。")},3100)}
-function openFeed(){sound("tap");el("feedDino").className="dino-icon hungry";el("heartMeter").textContent=renderHearts();el("feedText").innerHTML="ちびティラノは<br>おなかがすいているみたい！";el("feedDoctorText").textContent="なにをあげてみる？";el("finishFeedBtn").classList.add("hidden");document.querySelectorAll(".food-btn").forEach(btn=>btn.classList.remove("correct-food","wrong-food"));showScreen("feedScreen");speak("ちびティラノは、おなかがすいているみたい。ごはんをあげよう。")}function quickFeed(){openFeed()}
+function openFeed(){sound("tap");el("feedDino").className="feed-dino-img hungry";el("heartMeter").textContent=renderHearts();el("feedText").innerHTML="ちびティラノは<br>おなかがすいているみたい！";el("feedDoctorText").textContent="なにをあげてみる？";el("finishFeedBtn").classList.add("hidden");document.querySelectorAll(".food-btn").forEach(btn=>btn.classList.remove("correct-food","wrong-food"));showScreen("feedScreen");speak("ちびティラノは、おなかがすいているみたい。ごはんをあげよう。")}function quickFeed(){openFeed()}
 function flyMeat(){const layer=el("meatFlyLayer");const img=document.createElement("img");img.src="images/meat.png";img.className="flying-meat";img.style.left="58%";img.style.top="58%";layer.appendChild(img);setTimeout(()=>img.remove(),900)}
 function feedDinoFood(food,btn){sound("tap");if(food==="meat"){btn.classList.add("correct-food");el("feedDino").classList.add("dino-eat");flyMeat();setHearts(getHearts()+1);el("heartMeter").textContent=renderHearts();el("feedText").innerHTML="ガブガブ！<br><span class='bone-left'>🦴</span>";el("feedDoctorText").textContent="いいぞ！お肉をガブッと食べたぞ！";sound("eat");speak("ガブガブ。いいぞ。お肉をガブッと食べたぞ。うろこのお弁当まで食べないでくれー。");setTimeout(()=>el("finishFeedBtn").classList.remove("hidden"),900)}else if(food==="fish"){btn.classList.add("correct-food");setHearts(getHearts()+1);el("heartMeter").textContent=renderHearts();el("feedText").innerHTML="ぱくっ！<br>さかなも食べたよ！";el("feedDoctorText").textContent="いい発見だ！魚も少し好きみたい。";sound("eat");speak("いい発見だ。魚も少し好きみたいだね。");setTimeout(()=>btn.classList.remove("correct-food"),900);setTimeout(()=>el("finishFeedBtn").classList.remove("hidden"),900)}else{btn.classList.add("correct-food");el("feedText").innerHTML="くんくん…<br>今日は見てるだけみたい。";el("feedDoctorText").textContent="隊長、試してくれてありがとう！";sound("ok");speak("隊長、試してくれてありがとう。今日は葉っぱを見ているだけみたいだ。");setTimeout(()=>btn.classList.remove("correct-food"),900)}}
 function openDinoGet(){localStorage.setItem("pikoFirstDino","ちびティラノ");el("dinoGetText").textContent="やったー！"+getPlayerCall()+"、ちびティラノを発見したぞ！";showScreen("dinoGetScreen");speak("やったー。"+getPlayerCall()+"。ちびティラノを発見したぞ。")}function speakDinoGet(){sound("tap");speak("ちびティラノは、小さくても元気いっぱい。お肉が好きな赤ちゃん恐竜だよ。")}
@@ -55,3 +55,245 @@ function showDinoHint(name){
 
 
 window.addEventListener("load",()=>{if(getPlayerName())openHome()});
+
+
+
+
+/* Ver.0.9.4 恐竜マスターデータ */
+const DINO_MASTER = [
+  {id:"tyrannosaurus", no:"001", name:"ティラノサウルス", short:"ティラノ", image:"images/dinosaurs/tyrannosaurus.png", food:"meat", foodLabel:"おにく", desc:"力が強くて、お肉が大好きな恐竜だ。"},
+  {id:"triceratops", no:"002", name:"トリケラトプス", short:"トリケラ", image:"images/dinosaurs/triceratops.png", food:"leaf", foodLabel:"はっぱ", desc:"大きな角とえりかざりがかっこいい草食恐竜だ。"},
+  {id:"mosasaurus", no:"003", name:"モササウルス", short:"モサ", image:"images/dinosaurs/mosasaurus.png", food:"fish", foodLabel:"さかな", desc:"海を泳ぐ、とても大きな水のなかま。魚が好きだ。"},
+  {id:"spinosaurus", no:"004", name:"スピノサウルス", short:"スピノ", image:"images/dinosaurs/spinosaurus.png", food:"fish", foodLabel:"さかな", desc:"背中の大きな帆が目印。魚をとるのが得意だ。"},
+  {id:"pteranodon", no:"005", name:"プテラノドン", short:"プテラ", image:"images/dinosaurs/pteranodon.png", food:"fish", foodLabel:"さかな", desc:"空を飛ぶ翼竜。高いところから魚を見つけるぞ。"},
+  {id:"allosaurus", no:"006", name:"アロサウルス", short:"アロ", image:"images/dinosaurs/allosaurus.png", food:"meat", foodLabel:"おにく", desc:"すばやくて勇敢な肉食恐竜だ。"},
+  {id:"stegosaurus", no:"007", name:"ステゴサウルス", short:"ステゴ", image:"images/dinosaurs/stegosaurus.png", food:"leaf", foodLabel:"はっぱ", desc:"背中の板がかっこいい草食恐竜だ。"},
+  {id:"velociraptor", no:"008", name:"ヴェロキラプトル", short:"ラプトル", image:"images/dinosaurs/velociraptor.png", food:"meat", foodLabel:"おにく", desc:"小さくてすばしっこい、かしこい恐竜だ。"},
+  {id:"ankylosaurus", no:"009", name:"アンキロサウルス", short:"アンキロ", image:"images/dinosaurs/ankylosaurus.png", food:"leaf", foodLabel:"はっぱ", desc:"かたいよろいとしっぽのハンマーで身を守るぞ。"},
+  {id:"pachycephalosaurus", no:"010", name:"パキケファロサウルス", short:"パキケ", image:"images/dinosaurs/pachycephalosaurus.png", food:"leaf", foodLabel:"はっぱ", desc:"頭の骨がとても分厚い、元気な恐竜だ。"},
+  {id:"liopleurodon", no:"011", name:"リオプレウロドン", short:"リオ", image:"images/dinosaurs/liopleurodon.png", food:"fish", foodLabel:"さかな", desc:"海の中で力強く泳ぐ、魚が好きななかまだ。"},
+  {id:"giganotosaurus", no:"012", name:"ギガノトサウルス", short:"ギガノト", image:"images/dinosaurs/giganotosaurus.png", food:"meat", foodLabel:"おにく", desc:"とても大きくて迫力のある肉食恐竜だ。"}
+];
+
+function getOwnedDinos(){
+  let owned = JSON.parse(localStorage.getItem("pikoOwnedDinos") || "null");
+  if(!owned){
+    owned = ["tyrannosaurus"];
+    localStorage.setItem("pikoOwnedDinos", JSON.stringify(owned));
+  }
+  return owned;
+}
+
+function setOwnedDinos(arr){
+  localStorage.setItem("pikoOwnedDinos", JSON.stringify([...new Set(arr)]));
+}
+
+function getCurrentDinoId(){
+  return localStorage.getItem("pikoCurrentDino") || "tyrannosaurus";
+}
+
+function setCurrentDino(id){
+  localStorage.setItem("pikoCurrentDino", id);
+}
+
+function getDino(id){
+  return DINO_MASTER.find(d => d.id === id) || DINO_MASTER[0];
+}
+
+function getRandomNewOrAnyDino(){
+  const owned = getOwnedDinos();
+  const notOwned = DINO_MASTER.filter(d => !owned.includes(d.id));
+  const pool = notOwned.length ? notOwned : DINO_MASTER;
+  return pool[Math.floor(Math.random()*pool.length)];
+}
+
+/* 既存関数の上書き：図鑑 */
+function openZukan(){
+  sound("tap");
+  const owned = getOwnedDinos();
+  el("zukanFound").textContent = owned.length;
+  el("zukanTotal").textContent = DINO_MASTER.length;
+  const grid = el("zukanGrid");
+  grid.innerHTML = "";
+
+  DINO_MASTER.forEach(d => {
+    const found = owned.includes(d.id);
+    const btn = document.createElement("button");
+    btn.className = "zukan-item " + (found ? "found" : "locked");
+    btn.onclick = () => found ? showDinoInfo(d.id) : showDinoHint(d.name);
+    btn.innerHTML = `
+      <img class="zukan-dino-img" src="${d.image}" alt="${d.name}">
+      <div class="zukan-name">${found ? d.short : "？？？"}</div>
+      <div class="zukan-badge">${found ? "GET!" : "まだ"}</div>
+    `;
+    grid.appendChild(btn);
+  });
+
+  el("zukanText").textContent = "隊長！ここに発見した恐竜が集まるぞ。";
+  showScreen("zukanScreen");
+  speak("隊長。ここに発見した恐竜が集まるぞ。");
+}
+
+function showDinoInfo(id){
+  const d = getDino(id);
+  sound("ok");
+  el("zukanText").textContent = d.name + "！" + d.desc + " 好きなごはんは「" + d.foodLabel + "」だ。";
+  speak(d.name + "。" + d.desc + "好きなごはんは、" + d.foodLabel + "だ。");
+}
+
+function showDinoHint(name){
+  sound("tap");
+  el("zukanText").textContent = name + "はまだ見つけていない。次のたまごにいるかもしれないぞ！";
+  speak(name + "はまだ見つけていない。次のたまごにいるかもしれないぞ。");
+}
+
+/* 基地表示 */
+function renderBaseDinos(){
+  const holder = el("baseDinoList");
+  if(!holder) return;
+  const owned = getOwnedDinos();
+  holder.innerHTML = "";
+  owned.slice(0, 12).forEach(id => {
+    const d = getDino(id);
+    const img = document.createElement("img");
+    img.src = d.image;
+    img.alt = d.name;
+    img.className = "base-dino-mini";
+    holder.appendChild(img);
+  });
+}
+
+function openBase(){
+  sound("tap");
+  el("baseLevel").textContent=getBaseLevel();
+  showScreen("baseScreen");
+  renderBaseDinos();
+  speak("隊長。ここが恐竜基地だ。発見した恐竜がここに集まるぞ。");
+}
+
+/* 卵：新しい恐竜を選ぶ */
+function openHatch(){
+  sound("tap");
+  hatched=false;
+  const nextDino = getRandomNewOrAnyDino();
+  localStorage.setItem("pikoNextHatchDino", nextDino.id);
+
+  el("hatchTitle").innerHTML="たまごを<br>タッチしてね";
+  el("hatchText").textContent="なにが生まれるかな？";
+  el("crackText").classList.add("hidden");
+  el("crackText").textContent="ピキ…";
+  el("hatchEgg").className="hatch-egg";
+  el("hatchEgg").textContent="🥚";
+  document.querySelector(".hatch-area").classList.remove("cracking");
+
+  const baby = el("babyDino");
+  baby.src = nextDino.image;
+  baby.alt = nextDino.name;
+  baby.classList.add("hidden");
+
+  el("afterHatchBtn").classList.add("hidden");
+  showScreen("hatchScreen");
+  speak(getPlayerCall()+"。たまごをタッチしてね。");
+}
+
+function hatchEgg(){
+  if(hatched)return;
+  hatched=true;
+  const d = getDino(localStorage.getItem("pikoNextHatchDino") || "tyrannosaurus");
+
+  el("hatchTitle").innerHTML="うまれるよ！";
+  el("hatchText").textContent="ピキ…ピキピキ…！";
+  el("crackText").classList.remove("hidden");
+  speak("おっ。たまごが、われそうだぞ。");
+  playCrackSoundLong();
+  document.querySelector(".hatch-area").classList.add("cracking");
+  el("hatchEgg").classList.add("crack");
+  setTimeout(()=>el("crackText").textContent="ピキ…",150);
+  setTimeout(()=>el("crackText").textContent="ピキッ…",700);
+  setTimeout(()=>el("crackText").textContent="ピキピキ…",1300);
+  setTimeout(()=>el("crackText").textContent="ピキピキピキ…！",1900);
+  setTimeout(()=>el("crackText").textContent="パカーン！",2550);
+  setTimeout(()=>{
+    el("babyDino").classList.remove("hidden");
+    el("hatchText").textContent=d.name+"が 生まれたよ！";
+    el("afterHatchBtn").classList.remove("hidden");
+    setCurrentDino(d.id);
+    const owned = getOwnedDinos();
+    if(!owned.includes(d.id)){
+      owned.push(d.id);
+      setOwnedDinos(owned);
+    }
+    speak("やったー。" + d.name + "が生まれたよ。");
+  },3100);
+}
+
+/* ごはん画面 */
+function openFeed(){
+  sound("tap");
+  const d = getDino(getCurrentDinoId());
+  el("feedDino").className="feed-dino-img hungry";
+  el("feedDino").src = d.image;
+  el("feedDino").alt = d.name;
+  el("heartMeter").textContent=renderHearts();
+  el("feedText").innerHTML=d.short+"は<br>おなかがすいているみたい！";
+  el("feedDoctorText").textContent=d.short+"は何が好きかな？";
+  el("finishFeedBtn").classList.add("hidden");
+  document.querySelectorAll(".food-btn").forEach(btn=>btn.classList.remove("correct-food","wrong-food"));
+  showScreen("feedScreen");
+  speak(d.short+"は、おなかがすいているみたい。ごはんをあげよう。");
+}
+
+function feedDinoFood(food,btn){
+  sound("tap");
+  const d = getDino(getCurrentDinoId());
+  const good = food === d.food;
+
+  if(food==="meat"){
+    btn.classList.add(good ? "correct-food" : "wrong-food");
+    el("feedDino").classList.add("dino-eat");
+    flyMeat();
+    if(good){ setHearts(getHearts()+1); }
+    el("heartMeter").textContent=renderHearts();
+    el("feedText").innerHTML = good ? "ガブガブ！<br><span class='bone-left'>🦴</span>" : "くんくん…<br>今日は少しだけみたい。";
+    el("feedDoctorText").textContent = good ? "いいぞ！大好きなごはんだ！" : d.short+"の大好きは「"+d.foodLabel+"」みたい。";
+    sound(good ? "eat" : "ok");
+    speak(good ? "いいぞ。大好きなごはんだ。" : d.short+"の大好きは、"+d.foodLabel+"みたいだ。");
+  }else if(food==="fish"){
+    btn.classList.add(good ? "correct-food" : "wrong-food");
+    if(good){ setHearts(getHearts()+1); }
+    el("heartMeter").textContent=renderHearts();
+    el("feedText").innerHTML = good ? "ぱくっ！<br>さかなが大好き！" : "ぱくっ。<br>少し食べたよ。";
+    el("feedDoctorText").textContent = good ? "いい発見だ！魚が大好きだ！" : d.short+"の大好きは「"+d.foodLabel+"」みたい。";
+    sound("eat");
+    speak(good ? "いい発見だ。魚が大好きだ。" : d.short+"の大好きは、"+d.foodLabel+"みたいだ。");
+  }else{
+    btn.classList.add(good ? "correct-food" : "wrong-food");
+    if(good){ setHearts(getHearts()+1); }
+    el("heartMeter").textContent=renderHearts();
+    el("feedText").innerHTML = good ? "むしゃむしゃ！<br>はっぱが大好き！" : "くんくん…<br>今日は見てるだけみたい。";
+    el("feedDoctorText").textContent = good ? "いいぞ！葉っぱが大好きだ！" : d.short+"の大好きは「"+d.foodLabel+"」みたい。";
+    sound(good ? "eat" : "ok");
+    speak(good ? "いいぞ。葉っぱが大好きだ。" : d.short+"の大好きは、"+d.foodLabel+"みたいだ。");
+  }
+
+  setTimeout(()=>btn.classList.remove("correct-food","wrong-food"),900);
+  setTimeout(()=>el("finishFeedBtn").classList.remove("hidden"),900);
+}
+
+function openDinoGet(){
+  const d = getDino(getCurrentDinoId());
+  localStorage.setItem("pikoFirstDino", d.name);
+  el("getDinoImg").src = d.image;
+  el("getDinoImg").alt = d.name;
+  el("getDinoName").textContent = d.name;
+  el("dinoGetText").textContent="やったー！"+getPlayerCall()+"、"+d.name+"を発見したぞ！";
+  showScreen("dinoGetScreen");
+  speak("やったー。"+getPlayerCall()+"。"+d.name+"を発見したぞ。");
+}
+
+function speakDinoGet(){
+  sound("tap");
+  const d = getDino(getCurrentDinoId());
+  speak(d.name+"。" + d.desc);
+}
+
