@@ -297,3 +297,172 @@ function speakDinoGet(){
   speak(d.name+"。" + d.desc);
 }
 
+
+
+
+
+/* Ver.0.9.5 数字レベルと恐竜ごとのハート */
+function getNumberLevel(){
+  return Number(localStorage.getItem("pikoNumberLevel") || 5);
+}
+function setNumberLevel(n){
+  localStorage.setItem("pikoNumberLevel", String(n));
+}
+function selectNumberLevel(n){
+  setNumberLevel(n);
+  const l1 = el("level1Btn");
+  const l2 = el("level2Btn");
+  if(l1 && l2){
+    l1.classList.toggle("selected", n === 5);
+    l2.classList.toggle("selected", n === 10);
+  }
+  sound("tap");
+  speak(n === 5 ? "レベルいち。いちからごまでだよ。" : "レベルに。いちからじゅうまでに挑戦だ。");
+}
+function updateLevelButtons(){
+  const n = getNumberLevel();
+  const l1 = el("level1Btn");
+  const l2 = el("level2Btn");
+  if(l1 && l2){
+    l1.classList.toggle("selected", n === 5);
+    l2.classList.toggle("selected", n === 10);
+  }
+}
+
+/* 既存 openMission を上書き */
+function openMission(){
+  sound("tap");
+  const p=getPlayerCall();
+  const level = getNumberLevel();
+  el("missionText").textContent = p + "、1から" + level + "までの数字を見つけよう！";
+  showScreen("missionScreen");
+  updateLevelButtons();
+  speak(p+"。1から"+level+"までの数字を見つけよう。クリアすると、たまごが光るぞ。");
+}
+function speakMission(){
+  sound("tap");
+  const level = getNumberLevel();
+  speak(getPlayerCall()+"。1から"+level+"までの数字を見つけよう。クリアすると、たまごが光るぞ。");
+}
+
+function startNumberGame(){
+  sound("tap");
+  questionNow=1;
+  scoreNow=0;
+  locked=false;
+  showScreen("gameScreen");
+  makeQuestion();
+}
+
+function makeQuestion(){
+  locked=false;
+  const level = getNumberLevel();
+  targetNumber=Math.floor(Math.random()*level)+1;
+  el("questionNow").textContent=questionNow;
+  el("scoreNow").textContent=scoreNow;
+  el("targetNumber").textContent=targetNumber;
+  const grid=el("numberGrid");
+  grid.innerHTML="";
+  grid.classList.toggle("level10", level === 10);
+
+  const nums = [];
+  for(let i=1;i<=level;i++){ nums.push(i); }
+
+  shuffle(nums).forEach(num=>{
+    const b=document.createElement("button");
+    const colorNum = ((num - 1) % 5) + 1;
+    b.className="number-btn color-"+colorNum;
+    b.textContent=num;
+    b.onclick=()=>chooseNumber(num,b);
+    grid.appendChild(b);
+  });
+  setTimeout(()=>repeatQuestion(false),300);
+}
+
+function repeatQuestion(manual=false){
+  const namePart=(questionNow===1||manual)?getPlayerCall()+"。":"";
+  const yomi = {
+    1:"いち",2:"に",3:"さん",4:"よん",5:"ご",
+    6:"ろく",7:"なな",8:"はち",9:"きゅう",10:"じゅう"
+  };
+  speak(namePart + (yomi[targetNumber] || targetNumber) + "をえらんでね。");
+}
+
+/* 恐竜ごとのハート */
+function getAllDinoHearts(){
+  return JSON.parse(localStorage.getItem("pikoDinoHearts") || "{}");
+}
+function saveAllDinoHearts(data){
+  localStorage.setItem("pikoDinoHearts", JSON.stringify(data));
+}
+function getDinoHeart(id){
+  const data = getAllDinoHearts();
+  return Number(data[id] || 0);
+}
+function setDinoHeart(id, value){
+  const data = getAllDinoHearts();
+  data[id] = Math.max(0, Math.min(5, Number(value)));
+  saveAllDinoHearts(data);
+}
+function addDinoHeart(id, amount=1){
+  setDinoHeart(id, getDinoHeart(id) + amount);
+}
+function renderDinoHearts(id){
+  const n = getDinoHeart(id);
+  return "❤️".repeat(n) + "🤍".repeat(5-n);
+}
+
+/* 既存 openFeed を上書き */
+function openFeed(){
+  sound("tap");
+  const d = getDino(getCurrentDinoId());
+  el("feedDino").className="feed-dino-img hungry";
+  el("feedDino").src = d.image;
+  el("feedDino").alt = d.name;
+  el("heartMeter").textContent=renderDinoHearts(d.id);
+  el("feedText").innerHTML=d.short+"は<br>おなかがすいているみたい！";
+  el("feedDoctorText").textContent=d.short+"は何が好きかな？";
+  el("finishFeedBtn").classList.add("hidden");
+  document.querySelectorAll(".food-btn").forEach(btn=>btn.classList.remove("correct-food","wrong-food"));
+  showScreen("feedScreen");
+  speak(d.short+"は、おなかがすいているみたい。ごはんをあげよう。");
+}
+
+/* 既存 feedDinoFood を上書き：好きな食べ物だけハートが増える */
+function feedDinoFood(food,btn){
+  sound("tap");
+  const d = getDino(getCurrentDinoId());
+  const good = food === d.food;
+
+  btn.classList.add(good ? "correct-food" : "wrong-food");
+
+  if(good){
+    addDinoHeart(d.id, 1);
+    el("feedDino").classList.add("dino-eat");
+  }
+
+  el("heartMeter").textContent=renderDinoHearts(d.id);
+
+  if(food==="meat"){
+    flyMeat();
+    el("feedText").innerHTML = good ? "ガブガブ！<br><span class='bone-left'>🦴</span>" : "くんくん…<br>今日は少しだけみたい。";
+  }else if(food==="fish"){
+    el("feedText").innerHTML = good ? "ぱくっ！<br>さかなが大好き！" : "ぱくっ。<br>少し食べたよ。";
+  }else{
+    el("feedText").innerHTML = good ? "むしゃむしゃ！<br>はっぱが大好き！" : "くんくん…<br>今日は見てるだけみたい。";
+  }
+
+  if(good){
+    el("feedDoctorText").textContent = "いいぞ！"+d.short+"の大好きなごはんだ！";
+    sound("eat");
+    speak("いいぞ。"+d.short+"の大好きなごはんだ。");
+  }else{
+    el("feedDoctorText").textContent = d.short+"の大好きは「"+d.foodLabel+"」みたい。";
+    sound("ok");
+    speak(d.short+"の大好きは、"+d.foodLabel+"みたいだ。");
+  }
+
+  setTimeout(()=>btn.classList.remove("correct-food","wrong-food"),900);
+  setTimeout(()=>el("finishFeedBtn").classList.remove("hidden"),900);
+}
+
